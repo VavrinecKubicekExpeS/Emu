@@ -12,9 +12,7 @@ namespace Emu
     {
         internal Memory(JSONMemory source)
         {
-            foreach (var (address, data) in
-                from cell 
-                in source.memory select ((ushort)cell.address, (short)cell.data))
+            foreach (var (address, data) in source.memory.Select(cell => { unchecked { return ((ushort)cell.address, (short)cell.data); } }).ToArray()) //i don't even
                     this[address] = data;
         }
 
